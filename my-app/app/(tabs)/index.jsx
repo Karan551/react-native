@@ -1,27 +1,44 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
 import React from 'react';
+import Product from "@/components/Product";
+
+const products = [
+  { id: "1", name: "Watch", price: "4000", image_url: "https://images.pexels.com/photos/5421271/pexels-photo-5421271.jpeg",instock:true },
+  { id: "2", name: "Shoes", price: "1000", image_url: "https://images.pexels.com/photos/6765524/pexels-photo-6765524.jpeg",instock:true },
+  { id: "3", name: "Bag", price: "800", image_url: "https://images.pexels.com/photos/4937323/pexels-photo-4937323.jpeg",instock:true },
+  { id: "4", name: "Smart Bag", price: "1800", image_url: "https://images.pexels.com/photos/4937323/pexels-photo-4937323.jpeg",instock:true },
+  { id: "5", name: "Books", price: "500", image_url: "https://images.pexels.com/photos/4937323/pexels-photo-4937323.jpeg",instock:true },
+  { id: "6", name: "T.V.", price: "18000", image_url: "https://images.pexels.com/photos/4937323/pexels-photo-4937323.jpeg",instock:false },
+  { id: "7", name: "Shirt", price: "800", image_url: "https://images.pexels.com/photos/4937323/pexels-photo-4937323.jpeg",instock:true },
+  { id: "8", name: "Pant", price: "1000", image_url: "https://images.pexels.com/photos/4937323/pexels-photo-4937323.jpeg" },{ id: "3", name: "Bag", price: "800", image_url: "https://images.pexels.com/photos/4937323/pexels-photo-4937323.jpeg",instock:true },
+  { id: "9", name: "Sweater", price: "700", image_url: "https://images.pexels.com/photos/4937323/pexels-photo-4937323.jpeg",instock:false },
+  { id: "10", name: "Bottles", price: "200", image_url: "https://images.pexels.com/photos/4937323/pexels-photo-4937323.jpeg",instock:true },
+
+
+
+];
+
+
 
 const app = () => {
   return (
     <View style={styles.container}>
+      <FlatList
+        data={products}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) =>
+          <Product item={item} />
+        }
 
-      {/* Header */}
-      <View style={styles.header}>
-        <Image
-          source={{ uri: "https://images.pexels.com/photos/247287/pexels-photo-247287.jpeg" }}
-          style={styles.profile}
-        />
-        <Text style={styles.username}>Ganesh Dev</Text>
-      </View>
-
-      {/* Post Image */}
-      <Image
-        source={{ uri: "https://images.pexels.com/photos/147411/italy-mountains-dawn-daybreak-147411.jpeg" }}
-        style={styles.postImage}
+        ListHeaderComponent={
+          <Text style={styles.header}>Product List</Text>
+        }
+        ListFooterComponent={
+          <Text style={styles.footer}>End of Product</Text>
+        }
+        // horizontal={true}
+        initialNumToRender={1}
       />
-      <Text style={styles.likes}>❤️ 120 Likes</Text>
-      {/* caption */}
-      <Text style={styles.caption}>Learning React Native 🔥</Text>
     </View>
   );
 };
@@ -29,44 +46,28 @@ const app = () => {
 export default app;
 
 
+
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 40,
     backgroundColor: "#f5f5f5",
-    paddingTop: 40
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 20,
-    borderBottomWidth: 3,
-    borderColor: "#000",
-    marginBottom: 2
-  },
-  profile: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: "center"
-  },
-  username: {
-    fontWeight: "bold",
-    fontSize: 18,
-    marginLeft: 15
-  },
-  postImage: {
-    width: "100%",
-    height: 300
 
   },
-  caption: {
-    fontSize: 28,
-    padding: 10,
-    color: "#050505"
+  header: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 10
   },
-  likes: {
+  footer: {
     fontSize: 20,
-   paddingHorizontal:10,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 10
   }
-});
+
+}
+);
