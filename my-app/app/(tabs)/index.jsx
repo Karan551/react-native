@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, Image, FlatList, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, Button, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import Product from "@/components/Product";
+import LikedBtn from "@/components/LikedBtn";
+import Counter from "@/components/Counter";
 
 
 const products = [
@@ -22,67 +23,46 @@ const products = [
 
 
 
-  const app = () => {
-    const [counter, setCounter] = useState(0);
-    console.log("this is the value of counter::", counter);
+const app = () => {
 
-
-    return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Count : {counter}</Text>
-        <View style={styles.btnContainer}>
-          <Button
-            title="Decrease"
-            color="#F904D2"
-            accessibilityLabel="Decrease button"
-            onPress={(prev) => prev > 0 ? setCounter(counter - 1) : 0}
-          />
-
-          <Button
-            title="Reset"
-            color="#5058E9"
-            accessibilityLabel="Decrease button"
-            onPress={() => setCounter(0)}
-          />
-          <Button
-            title="Increase"
-            color="#3537DF"
-            accessibilityLabel="Decrease button"
-            onPress={() => setCounter(counter + 1)}
-          />
-        </View>
-      </View>
-    );
-  };
-
-  export default app;
-
-
-
-
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingTop: 40,
-      backgroundColor: "#f5f5f5",
-
-    },
-    text: {
-      fontSize: 30,
-      fontWeight: "bold",
-      textAlign: "center",
-      marginTop: 10
-    },
-    btnContainer: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginTop: 20,
-      padding: 10
-    },
-    btn: {
-      padding: 18,
-      fontSize: 18
-    }
-  }
+  // console.log("liked value::", liked);
+  return (
+    <View style={styles.container} >
+      <LikedBtn />
+      <Counter />
+    </View>
   );
+};
+
+export default app;
+
+
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 40,
+    backgroundColor: "#f5f5f5",
+    justifyContent: "center",
+    alignItems: "center",
+    // width:"50%",
+
+  },
+  text: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 10
+  },
+  btnContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+    padding: 10,
+    
+  },
+
+}
+);
