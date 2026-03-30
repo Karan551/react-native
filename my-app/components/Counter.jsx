@@ -42,11 +42,12 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     btnContainer: {
-        flexDirection: "row",
-        justifyContent: "space-around",
+        // flexDirection: "row",
+        // justifyContent: "space-around",
+
         margin: 20,
-        width: "100%",
-        // height: 400
+        // width: "100%",
+        // height: 400,
         flex:1,
     }
 
