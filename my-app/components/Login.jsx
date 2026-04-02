@@ -1,11 +1,14 @@
 import { View, Button, TextInput, StyleSheet, Alert, Platform, Text, TouchableOpacity } from "react-native";
-import { useState } from "react";
-import React from "react";
+import { useState, useEffect } from "react";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
-    const [errorText, setErrorText] = useState("");
+
+    const [emailError, setEmailError] = useState("");
+    const [pwdError, setPwdError] = useState("");
+
 
 
 
@@ -15,19 +18,41 @@ const Login = () => {
         return regex.test(text);
     };
 
+    const isValidPassword = (password) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+        return passwordRegex.test(password);
+    };
+
     const handleLogin = () => {
-        if (email == "" || pwd == "") {
-            setErrorText("Please enter a email and password.");
+
+        if (!email || !pwd) {
+            // setEmailError(!email ? "Email required." : "");
+            setEmailError(!email ? "Email Required." : !isEmail(email) ? "Email not valid format." : "");
+
+            // console.log(!email ? "Email Required." : !isEmail(email) ? "Email not valid format." : "");
+
+
+
+            // setPwdError(!pwd ? "Password required." : "");
+            setPwdError(!pwd ? "Password Required." : "");
 
             return;
 
         }
-        if (!isEmail(email) || pwd.length < 6) {
-            // alert("Please enter a valid email address and password length should be greater than 6.");
-
-            setErrorText("Please enter a valid email address and password length should be greater than 6.");
+        if (!isEmail(email)) {
+            setEmailError("Please enter a valid email address.");
+            console.log("Invalid email");
             return;
         }
+
+
+        if (!isValidPassword(pwd)) {
+            setPwdError("Password must be 6+ chars, include uppercase, lowercase, number, and symbol.");
+            console.log("Invalid password");
+            return;
+        }
+
 
         if (Platform.OS == "android") {
             if (isEmail(email)) {
@@ -46,48 +71,74 @@ const Login = () => {
         }
     };
 
-    // if (errorText) {
-    //     setTimeout(() => {
-    //         setErrorText("");
-    //     }, 3000);
-    // }
+    useEffect(() => {
+        if (emailError || pwdError) {
+            const timer = setTimeout(() => {
+                setEmailError("");
+                setPwdError("");
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+
+    }, [emailError, pwdError]);
 
     return (
-        <View style={styles.container}>
+        <>
+            <LinearGradient colors={["#6974D1", "#9A8DFF"]} style={styles.container}>
+                <View >
+                    <Text style={styles.heading}>Login</Text>
+                    {
 
-            {
-                errorText && <View style={styles.showError}>
-                    <Text style={styles.errorText}>{errorText}</Text>
+                        emailError ?
+                            <View style={styles.showError}>
+                                <Text style={styles.errorText}>{emailError}</Text>
 
-                    <TouchableOpacity onPress={() => setErrorText("")}>
-                        <Text style={styles.delete}>❌</Text>
-                    </TouchableOpacity>
+                                <TouchableOpacity onFocus={() => setEmailError("")}>
+                                    <Text style={styles.delete}>❌</Text>
+                                </TouchableOpacity>
+                            </View> : null
+                    }
+                    <TextInput
+                        style={styles.textInput}
+                        value={email}
+                        onChangeText={setEmail}
+                        placeholder="Enter your email:: "
+                        keyboardType="email-address"
+                    />
+
+
+                    <TextInput
+                        style={styles.pwd}
+                        value={pwd}
+                        onChangeText={setPwd}
+                        placeholder="Enter your Password:: "
+                        secureTextEntry={true}
+
+                    />
+
+                    {
+                        pwdError ?
+                            <View style={[styles.showError, styles.pwdError]}>
+                                <Text style={styles.errorText}>{pwdError}</Text>
+
+                                <TouchableOpacity onPress={() => setPwdError("")}>
+                                    <Text style={styles.delete}>❌</Text>
+                                </TouchableOpacity>
+                            </View>
+                            : null
+                    }
+
+
+                    <Button
+                        title="Submit"
+                        color={"#6974D1"}
+                        accessibilityLabel="Submit"
+                        onPress={handleLogin}
+                    />
                 </View>
-            }
-            <TextInput
-                style={styles.textInput}
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Enter your email:: "
-                keyboardType="email-address"
-            />
-
-            <TextInput
-                style={styles.pwd}
-                value={pwd}
-                onChangeText={setPwd}
-                placeholder="Enter your Password:: "
-                secureTextEntry={true}
-
-            />
-
-            <Button
-                title="Submit"
-                color={"#6974D1"}
-                accessibilityLabel="Submit"
-                onPress={handleLogin}
-            />
-        </View>
+            </LinearGradient>
+        </>
     );
 };
 
@@ -105,7 +156,14 @@ const styles = StyleSheet.create({
     },
     btnContainer: {},
     btn: {},
-    text: {},
+    heading: {
+        fontSize: 50,
+        fontWeight: 700,
+        textAlign: "center",
+        color: "#407114",
+        fontFamily: "OpenSans-Bold",
+        color: "#000"
+    },
     textInput: {
         borderWidth: 1,
         borderRadius: 10,
@@ -126,7 +184,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         backgroundColor: "#CE182C",
         paddingHorizontal: Platform.OS == "web" ? 20 : 12,
-        paddingBlock:  Platform.OS == "web" ? 15 : 12,
+        paddingBlock: Platform.OS == "web" ? 15 : 12,
         borderRadius: 10,
         alignItems: "center"
 
@@ -138,9 +196,12 @@ const styles = StyleSheet.create({
     },
     delete: {
         backgroundColor: "#fff",
-        paddingHorizontal:  Platform.OS == "web" ? 15 : 7,
-        paddingBlock:  Platform.OS == "web" ? 12 : 5,
-        fontSize:  Platform.OS == "web" ? 15 : 10,
+        paddingHorizontal: Platform.OS == "web" ? 15 : 7,
+        paddingBlock: Platform.OS == "web" ? 12 : 5,
+        fontSize: Platform.OS == "web" ? 15 : 10,
         borderRadius: 10
+    },
+    pwdError: {
+        marginBottom: 10
     }
 });
