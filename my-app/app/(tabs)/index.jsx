@@ -1,9 +1,6 @@
 import { View, Text, StyleSheet, Image, FlatList, Button, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import LikedBtn from "@/components/LikedBtn";
-import Counter from "@/components/Counter";
-import Todo from '@/components/Todo';
-
+import { Login } from "@/components/index";
 
 const products = [
   { id: "1", name: "Watch", price: "4000", image_url: "https://images.pexels.com/photos/5421271/pexels-photo-5421271.jpeg", instock: true },
@@ -29,7 +26,7 @@ const app = () => {
   // console.log("liked value::", liked);
   return (
     <View style={styles.container} >
-    <Todo />
+      <Login />
     </View>
   );
 };
@@ -60,7 +57,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 20,
     padding: 10,
-    
+
   },
 
 }

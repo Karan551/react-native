@@ -90,7 +90,7 @@ const Todo = () => {
 
 export default Todo;
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
 
