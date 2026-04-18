@@ -1,8 +1,8 @@
-import Counter from "./Counter";
-import LikedBtn from "./LikedBtn";
-import Todo from "./Todo";
-import Product from "./Product";
-import Login from "./Login";
+import Counter from "./Custom/Counter";
+import LikedBtn from "./Custom/LikedBtn";
+import Todo from "./Custom/Todo";
+import Product from "./Custom/Product";
+import Login from "./Custom/Login";
 
 
 

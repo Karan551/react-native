@@ -1,35 +1,81 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { View, Text } from "react-native";
+import React from "react";
+import { Tabs } from "expo-router";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const TabLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarActiveTintColor: "#000",
+        headerStyle: {
+          backgroundColor: "#25292e",
+        },
+        headerShadowVisible: false,
+        headerTintColor: "orange",
+        tabBarStyle:{
+          backgroundColor: '#2EC134',
+        }
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "home-sharp" : "home-outline"}
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="about"
+        options={{
+          title: "About",
+          tabBarIcon: ({ color, focused, size }) => (
+            <Ionicons
+              name={
+                focused ? "information-circle" : "information-circle-outline"
+              }
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="name"
+        options={{
+          title: "My Name",
+          tabBarIcon: ({ color, focused, size }) => (
+            <Ionicons
+              name={focused ? "alarm" : "alarm-outline"}
+              color={color}
+              size={size}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "explore",
+          tabBarIcon: ({ color, focused, size }) => (
+            <Ionicons
+              name={focused ? "paper-plane-sharp" : "paper-plane-outline"}
+              color={color}
+              size={size}
+            />
+          ),
         }}
       />
     </Tabs>
   );
-}
+};
+
+export default TabLayout;
